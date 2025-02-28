@@ -1,0 +1,36 @@
+batch_size: 32
+class_name: null
+context_size: 32
+data_type: text_dataset
+dropout: 0.5
+embed_size: 300
+finetune: false
+flag: train
+gpu_id:
+- 0
+kernel_size:
+- 2
+- 3
+- 4
+log_freq: 10
+loss_type: CrossEntropyLoss
+lr: 0.001
+milestones:
+- 30
+- 60
+- 90
+momentum: 0.9
+net_type: TextCNN
+num_channels: 100
+num_epochs: 100
+num_workers: 4
+optim_type: SGD
+resample: false
+test_data: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/data
+topk:
+- 1
+- 5
+train_data: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/data
+vocab_file: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/vocabulary.json
+weight_decay: 0.0001
+work_dir: work_space
