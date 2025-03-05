@@ -54,7 +54,12 @@ class Trainer(object):
         # 构建学习率调整策略
         self.scheduler = torch.optim.lr_scheduler.MultiStepLR(self.optimizer, cfg.milestones)
         # 使用tensorboard记录和可视化Loss
-        self.writer = tensorboard.SummaryWriter(cfg.log_root)
+        # Update tensorboard writer initialization
+        log_dir = os.path.join(cfg.work_dir, 'tensorboard_logs')
+        file_utils.create_dir(log_dir)
+        self.writer = tensorboard.SummaryWriter(log_dir=log_dir)
+        
+        self.writer = tensorboard.SummaryWriter(log_dir=cfg.log_root, flush_secs=30)
         # 打印信息
         self.num_samples = len(self.train_loader.sampler)
         self.logger.info("=" * 60)
@@ -179,7 +184,9 @@ class Trainer(object):
                                                                                     topk_acc))
 
         topk_acc = {"top{}".format(k): v.avg for k, v in train_accuracy.items()}
-        self.writer.add_scalar("train-loss", train_losses.avg, epoch)
+        self.writer.add_scalar("train/loss", train_losses.avg, epoch)
+        for k, v in train_accuracy.items():
+            self.writer.add_scalar(f"train/accuracy_top{k}", v.avg, epoch)
         self.writer.add_scalars("train-accuracy", topk_acc, epoch)
         self.logger.info("train epoch:{:0=3d},loss:{:3.4f},acc:{}".format(epoch, train_losses.avg, topk_acc))
         return topk_acc["top{}".format(self.topk[0])]
@@ -213,7 +220,9 @@ class Trainer(object):
         report = class_report.get_classification_report(true_labels, pred_labels, target_names=self.cfg.class_name)
         topk_acc = {"top{}".format(k): v.avg for k, v in test_accuracy.items()}
         lr = self.scheduler.get_last_lr()[0]  # 获得当前学习率
-        self.writer.add_scalar("test-loss", test_losses.avg, epoch)
+        self.writer.add_scalar("test/loss", test_losses.avg, epoch)
+        for k, v in test_accuracy.items():
+            self.writer.add_scalar(f"test/accuracy_top{k}", v.avg, epoch)
         self.writer.add_scalars("test-accuracy", topk_acc, epoch)
         self.logger.info("test  epoch:{:0=3d},lr:{:3.4f},loss:{:3.4f},acc:{}".format(epoch, lr, test_losses.avg, topk_acc))
         # self.logger.info("{}".format(report))

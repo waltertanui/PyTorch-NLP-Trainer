@@ -40,8 +40,25 @@ def get_models(net_type, num_classes, num_embeddings, embedding_dim=128, context
     elif net_type.lower() == "BiLSTM".lower():
         model = lstm.LSTMNet(num_classes=num_classes, num_embeddings=num_embeddings, embedding_dim=embedding_dim,
                              bidirectional=True)
+    elif net_type.lower() == "Transformer".lower():
+        # Extract transformer-specific parameters from kwargs
+        num_heads = kwargs.get('num_heads', 8)
+        num_layers = kwargs.get('num_layers', 6)
+        dropout = kwargs.get('dropout', 0.1)
+        
+        from core.models.transformer import TransformerModel  # Import here to avoid circular imports
+        model = TransformerModel(
+            num_classes=num_classes, 
+            num_embeddings=num_embeddings, 
+            context_size=context_size,
+            embedding_dim=embedding_dim,
+            num_heads=num_heads,
+            num_layers=num_layers,
+            dropout=dropout
+        )
     else:
         raise Exception("Error: net_type:{}".format(net_type))
+    
     model = model.train() if is_train else model.eval()
     return model
 
