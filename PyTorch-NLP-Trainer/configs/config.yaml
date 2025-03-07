@@ -1,27 +1,26 @@
 # Working directory
 work_dir: 'work_space'
 
-# Model architecture
-net_type: 'Transformer'
-num_layers: 6  # Number of transformer layers
-num_heads: 8  # Number of attention heads
-kernel_size: [2, 3, 4, 5]  # Keep this for compatibility with the framework
+# Model architecture - changed to TextCNN
+net_type: 'TextCNN'  # Changed from 'Transformer' to 'TextCNN'
+kernel_size: [2, 3, 4, 5]  # Keep kernel sizes for CNN
 
 # Embedding parameters
-embed_size: 512  # Embedding dimension
-context_size: 512  # Max sequence length
-dropout: 0.1  # Standard transformer dropout rate
+embed_size: 300  # Reduced from 512 to 300 (better for TextCNN)
+context_size: 256  # Reduced context size
+dropout: 0.5  # Increased dropout for better regularization
+num_channels: 100  # Number of channels for each kernel size
 
 # Training parameters
-batch_size: 16  # Smaller batch size for transformer
+batch_size: 32  # Increased batch size
 num_epochs: 100
-lr: 0.0001  # Lower learning rate for stability
+lr: 0.001  # Increased learning rate for CNN
 optim_type: 'Adam'
-weight_decay: 0.01  # Higher weight decay for regularization
+weight_decay: 0.0001  # Reduced weight decay
 
 # Learning rate scheduler
-milestones: [30, 60, 90]  # LR decay points
-gamma: 0.1  # LR decay factor
+milestones: [30, 60, 90]
+gamma: 0.1
 
 # Loss function
 loss_type: 'CrossEntropyLoss'
