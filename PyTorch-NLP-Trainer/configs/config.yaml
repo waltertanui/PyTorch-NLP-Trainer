@@ -1,42 +1,36 @@
-# Working directory
-work_dir: 'work_space'
-
-# Model architecture - changed to TextCNN
-net_type: 'TextCNN'  # Changed from 'Transformer' to 'TextCNN'
-kernel_size: [2, 3, 4, 5]  # Keep kernel sizes for CNN
-
-# Embedding parameters
-embed_size: 300  # Reduced from 512 to 300 (better for TextCNN)
-context_size: 256  # Reduced context size
-dropout: 0.5  # Increased dropout for better regularization
-num_channels: 100  # Number of channels for each kernel size
-
-# Training parameters
-batch_size: 32  # Increased batch size
-num_epochs: 100
-lr: 0.001  # Increased learning rate for CNN
-optim_type: 'Adam'
-weight_decay: 0.0001  # Reduced weight decay
-
-# Learning rate scheduler
-milestones: [30, 60, 90]
-gamma: 0.1
-
-# Loss function
-loss_type: 'CrossEntropyLoss'
-
-# Data parameters
-data_type: 'text_dataset'
-train_data: 'data/dataset/train'
-test_data: 'data/dataset/test'
-vocab_file: 'data/dataset/vocab.txt'
-class_name: 'data/dataset/class_name.txt'
-num_workers: 4
-resample: false
-
-# Evaluation
-topk: [1, 3, 5]
-log_freq: 5
+batch_size: 32
+class_name: null
+context_size: 32
+data_type: text_dataset
+dropout: 0.5
+embed_size: 300
 finetune: false
 flag: train
-gpu_id: [0]
+gpu_id:
+- 0
+kernel_size:
+- 2
+- 3
+- 4
+log_freq: 10
+loss_type: CrossEntropyLoss
+lr: 0.001
+milestones:
+- 30
+- 60
+- 90
+momentum: 0.9
+net_type: TextCNN
+num_channels: 100
+num_epochs: 100
+num_workers: 4
+optim_type: SGD
+resample: false
+test_data: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/data
+topk:
+- 1
+- 5
+train_data: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/data
+vocab_file: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/vocabulary.json
+weight_decay: 0.0001
+work_dir: work_space
