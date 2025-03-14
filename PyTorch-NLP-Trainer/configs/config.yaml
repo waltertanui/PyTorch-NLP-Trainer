@@ -26,11 +26,11 @@ num_epochs: 100
 num_workers: 4
 optim_type: SGD
 resample: false
-test_data: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/data
+test_data: ./data/text/data
 topk:
 - 1
 - 5
-train_data: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/data
-vocab_file: f:/Downloads/PyTorch-NLP-Trainer/PyTorch-NLP-Trainer/data/text/vocabulary.json
+train_data: ./data/text/data
+vocab_file: ./data/text/vocabulary.json
 weight_decay: 0.0001
 work_dir: work_space
